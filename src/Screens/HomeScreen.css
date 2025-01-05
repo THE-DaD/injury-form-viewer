@@ -1,0 +1,17 @@
+.btn-list{
+    background-color: aqua;
+    width: 20%;
+    height: inherit;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.home-screen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
