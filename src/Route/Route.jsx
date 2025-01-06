@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import HomeScreen from '../Screens/HomeScreen';
+import FormPage from '../Form/Form';
 
 function MainRouter(props) {
 
@@ -10,7 +11,8 @@ function MainRouter(props) {
       <Router>
         <Routes>
           <Route path="/" element={<HomeScreen/>} />
-        
+          <Route path="/form/:formDate" element={<FormPage/>} />
+
         </Routes>
       </Router>
     </div>

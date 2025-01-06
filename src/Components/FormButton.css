@@ -1,0 +1,20 @@
+.form-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-button {
+    background-color: #00796b; /* Dark teal color */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.form-button:hover {
+    background-color: #004d40; /* Darker teal color */
+    transform: scale(1.05);
+}

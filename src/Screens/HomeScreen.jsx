@@ -1,16 +1,14 @@
 import FormButton from '../Components/FormButton';
 import './HomeScreen.css';
-import React, { use, useEffect, useState } from 'react';
-import fire from '../Firebase/FireBase'
-import firebase from '../Firebase/FireBase';
+import React, { useEffect, useState } from 'react';
+import fire from '../Firebase/FireBase';
 
 function HomeScreen() {
-    const list = [1, 2, 3, 4, 5]
     const [data, setData] = useState([]);
-    // const [refresh, setRefresh] = useState(false);
+
     useEffect(() => {
-        const fetchData = async () => {
-          fire.getData((newData) => {
+        const fetchData = () => {
+            fire.getData((newData) => {
                 setData(newData);
                 console.log("data", newData);
             });
@@ -20,28 +18,28 @@ function HomeScreen() {
 
     useEffect(() => {
         setData(fire.data);
-        console.log("data" ,data);
-        // setRefresh(prev => !prev);    
-       
-    }, [fire.data])
+        console.log("data", data);
+    }, [fire.data]);
+
+    const handleDelete = (formId) => {
+        if (window.confirm('Are you sure you want to delete this form?')) {
+            fire.deleteData(formId);
+        }
+    };
 
     return (
         <div className='home-screen'>
-
-            <div className='btn-list'>
+            <div className='card-list'>
                 {
-                Object.keys(data).map((item, index) => {
-                    return(
-                    < div key = {index}>
-                    <FormButton value={item}></FormButton>
-                    </div> 
-                    )   
-                })
-                
+                    Object.keys(data).map((item, index) => (
+                        <div key={index} className='card'>
+                            <h2 className='card-title'>{item}</h2>
+                            <FormButton value={item} />
+                            <button className='delete-button' onClick={() => handleDelete(item)}>Delete</button>
+                        </div>
+                    ))
                 }
-
             </div>
-
         </div>
     );
 }

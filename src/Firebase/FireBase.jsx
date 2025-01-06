@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, set, remove } from 'firebase/database';
 
 class FireBase {
     constructor() {
@@ -18,10 +18,22 @@ class FireBase {
         this.data = {};
     }
 
-    // get data from real time database
-    getData = (callback) => {
+    sendData = (data) => {
+        set(ref(this.rltdb, `Forms/${this.date}`),data 
+    )
+            .then(() => {
+                console.log('Data sent');
+            })
+            .catch((error) => {
+                console.error('Error sending data: ', error);
+            });
+    }
+
+
+    // used in form page to get data from real time database
+    getData = (callback, ref) => {
         try {
-            let databaseref = ref(this.rltdb, '/Forms');
+            let databaseref = ref(this.rltdb, `/Forms/${ref}`);
             onValue(databaseref, (snapshot) => {
                 const data = snapshot.val() || {};
                 this.data = data;
@@ -31,6 +43,29 @@ class FireBase {
             console.error(error);
         }
     
+    }
+    // used in home screen to get all data from real time database
+    getData =  (callback) => {
+        try {
+            let databaseref = ref(this.rltdb, `/Forms`);
+             onValue(databaseref, (snapshot) => {
+                const data =  snapshot.val() || {};
+                this.data = data;
+                callback(data);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    
+    }
+    deleteData = (formId) => {
+        remove(ref(this.rltdb, `Forms/${formId}`))
+            .then(() => {
+                console.log('Data deleted');
+            })
+            .catch((error) => {
+                console.error('Error deleting data: ', error);
+            });
     }
 }
 
